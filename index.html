@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RaagaFlow Music</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/app-icon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary">
+        <div class="brand">
+          <div class="brand-mark">
+            <img src="assets/app-icon.svg" alt="RaagaFlow icon" />
+          </div>
+          <div>
+            <strong>RaagaFlow</strong>
+            <span>Music studio</span>
+          </div>
+        </div>
+
+        <nav class="nav-stack">
+          <button class="nav-item active" type="button" data-view="home">
+            <i data-lucide="layout-dashboard"></i>
+            Home
+          </button>
+          <button class="nav-item listener-only" type="button" data-view="search">
+            <i data-lucide="search"></i>
+            Search
+          </button>
+          <button class="nav-item listener-only" type="button" data-view="library">
+            <i data-lucide="library"></i>
+            Library
+          </button>
+          <button class="nav-item listener-only" type="button" data-view="live">
+            <i data-lucide="radio"></i>
+            Live
+          </button>
+          <button class="nav-item listener-only" type="button" data-view="user-login">
+            <i data-lucide="user"></i>
+            User Login
+          </button>
+          <button class="nav-item" id="creatorModeButton" type="button" data-view="creator-login">
+            <i data-lucide="user-cog"></i>
+            Creator Login
+          </button>
+          <button class="nav-item creator-only hidden" id="listenerModeButton" type="button" data-view="listener">
+            <i data-lucide="headphones"></i>
+            Listener App
+          </button>
+        </nav>
+
+        <section class="mini-panel">
+          <div class="panel-title">Daily Blend</div>
+          <strong>Hindi Indie + Chill Pop</strong>
+          <span>Updated today</span>
+          <button class="small-action" id="dailyMixButton" type="button">Play mix</button>
+        </section>
+      </aside>
+
+      <main class="content app-view active" id="listenerApp">
+        <header class="topbar">
+          <div class="search-box">
+            <i data-lucide="search"></i>
+            <input id="searchInput" type="search" placeholder="Search songs, albums, artists" />
+          </div>
+          <div class="top-actions">
+            <button class="icon-button" type="button" aria-label="Notifications">
+              <i data-lucide="bell"></i>
+            </button>
+            <button class="profile-button" id="profileButton" type="button" aria-label="Open user account">
+              <span id="profileInitials">PK</span>
+            </button>
+          </div>
+        </header>
+
+        <section class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">Fresh station</span>
+            <h1>Find your next repeat-worthy track.</h1>
+            <p>
+              Explore multilingual hits, handpicked indie finds, podcast moments,
+              and mood mixes in a calm, studio-style player.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-button" id="heroPlay" type="button">
+                <i data-lucide="play"></i>
+                Start listening
+              </button>
+              <button class="secondary-button" type="button">
+                <i data-lucide="shuffle"></i>
+                Surprise me
+              </button>
+            </div>
+          </div>
+          <div class="hero-art" aria-label="Featured album artwork">
+            <img
+              src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=900&q=80"
+              alt="Music studio with keyboard and recording gear"
+            />
+            <div class="now-card">
+              <span>Now trending</span>
+              <strong>Neon Baarish</strong>
+              <small>Aarav Sethi</small>
+            </div>
+          </div>
+        </section>
+
+        <section class="flash-section">
+          <div class="section-row compact">
+            <div>
+              <span class="eyebrow">Flash Picks</span>
+              <h2>Playlists & songs</h2>
+            </div>
+            <button class="text-button" id="refreshFlash" type="button">Refresh</button>
+          </div>
+          <div class="flash-layout">
+            <div class="flash-playlists" aria-label="Featured playlists">
+              <button class="flash-playlist sunrise" type="button" data-filter="Focus">
+                <img
+                  src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=300&q=80"
+                  alt="Morning Focus playlist"
+                />
+                <span>Morning Focus</span>
+                <strong>Soft starts</strong>
+              </button>
+              <button class="flash-playlist night" type="button" data-filter="Party">
+                <img
+                  src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=300&q=80"
+                  alt="Weekend Party playlist"
+                />
+                <span>Weekend Party</span>
+                <strong>High energy</strong>
+              </button>
+              <button class="flash-playlist rose" type="button" data-filter="Romance">
+                <img
+                  src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=300&q=80"
+                  alt="Love Notes playlist"
+                />
+                <span>Love Notes</span>
+                <strong>Romantic picks</strong>
+              </button>
+            </div>
+            <div class="flash-songs" id="flashSongs" aria-label="Featured songs"></div>
+          </div>
+        </section>
+
+        <section class="recommendation-section">
+          <div class="section-row compact">
+            <div>
+              <span class="eyebrow">Algorithm</span>
+              <h2>Recommended for you</h2>
+            </div>
+            <span class="upload-count" id="recommendationReason">Based on your listening taste</span>
+          </div>
+          <div class="recommendation-list" id="recommendationList"></div>
+        </section>
+
+        <section class="company-ads-section" aria-label="Company advertisements">
+          <div class="ad-banner ad-slot" data-ad-slot="home-hero-sponsor">
+            <span class="ad-label">Ad slot: Home sponsor</span>
+            <div>
+              <span class="eyebrow">Sponsored</span>
+              <h2>Company advertisement space</h2>
+              <p>This placement is reserved for future paid brand campaigns, affiliate offers, or ad-network banners.</p>
+            </div>
+            <button class="secondary-button" type="button">
+              <i data-lucide="megaphone"></i>
+              Reserve slot
+            </button>
+          </div>
+          <div class="ad-mini-grid" aria-label="Future ad slots">
+            <article class="ad-mini ad-slot" data-ad-slot="home-small-1">
+              <span class="ad-label">Ad slot</span>
+              <i data-lucide="building-2"></i>
+              <div>
+                <strong>Brand campaign</strong>
+                <span>Future company banner or offer</span>
+              </div>
+            </article>
+            <article class="ad-mini ad-slot" data-ad-slot="home-small-2">
+              <span class="ad-label">Ad slot</span>
+              <i data-lucide="badge-indian-rupee"></i>
+              <div>
+                <strong>Revenue ad</strong>
+                <span>AdMob, AdSense, or direct sponsor</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section-row">
+          <div>
+            <span class="eyebrow">Browse</span>
+            <h2>Mood channels</h2>
+          </div>
+          <button class="text-button" type="button">View all</button>
+        </section>
+
+        <section class="mood-grid" aria-label="Mood channels">
+          <button class="mood-tile coral" type="button" data-filter="Focus">
+            <i data-lucide="headphones"></i>
+            <strong>Focus</strong>
+            <span>Lo-fi, acoustic, soft beats</span>
+          </button>
+          <button class="mood-tile teal" type="button" data-filter="Party">
+            <i data-lucide="sparkles"></i>
+            <strong>Party</strong>
+            <span>Bollywood, Punjabi, dance</span>
+          </button>
+          <button class="mood-tile violet" type="button" data-filter="Romance">
+            <i data-lucide="heart"></i>
+            <strong>Romance</strong>
+            <span>Love songs across eras</span>
+          </button>
+          <button class="mood-tile amber" type="button" data-filter="Workout">
+            <i data-lucide="zap"></i>
+            <strong>Workout</strong>
+            <span>High energy playlists</span>
+          </button>
+        </section>
+
+        <section class="creator-preview" id="creatorPreview">
+          <div class="section-row compact">
+            <div>
+              <span class="eyebrow">For artists</span>
+              <h2>Have music to share?</h2>
+            </div>
+            <button class="secondary-button" id="openCreatorLogin" type="button">
+              <i data-lucide="log-in"></i>
+              Login as creator
+            </button>
+          </div>
+          <p class="upload-status">Creator tools are separate from the listener app. Log in as a creator to make albums and upload MP3 songs.</p>
+        </section>
+
+        <section class="music-layout">
+          <div class="track-area">
+            <div class="section-row compact">
+              <div>
+                <span class="eyebrow">Made for you</span>
+                <h2 id="trackSectionTitle">Top picks</h2>
+              </div>
+              <div class="segmented-control" aria-label="Song category">
+                <button class="active" type="button" data-category="all">All</button>
+                <button type="button" data-category="Hindi">Hindi</button>
+                <button type="button" data-category="Indie">Indie</button>
+                <button type="button" data-category="Podcast">Podcasts</button>
+                <button type="button" data-category="Focus">Focus</button>
+                <button type="button" data-category="Party">Party</button>
+                <button type="button" data-category="Romance">Romance</button>
+                <button type="button" data-category="Workout">Workout</button>
+              </div>
+            </div>
+            <div class="track-list" id="trackList"></div>
+          </div>
+
+          <aside class="queue-panel">
+            <div class="section-row compact">
+              <div>
+                <span class="eyebrow">Up next</span>
+                <h2>Queue</h2>
+              </div>
+              <button class="icon-button" type="button" aria-label="More queue options">
+                <i data-lucide="more-horizontal"></i>
+              </button>
+            </div>
+            <div class="queue-list" id="queueList"></div>
+          </aside>
+        </section>
+      </main>
+
+      <main class="content app-view" id="searchPage">
+        <section class="page-panel">
+          <div class="page-heading">
+            <span class="eyebrow">Search</span>
+            <h1>Find songs, albums, and creators.</h1>
+          </div>
+          <div class="search-box page-search">
+            <i data-lucide="search"></i>
+            <input id="pageSearchInput" type="search" placeholder="Search songs, albums, artists" />
+          </div>
+          <div class="track-list" id="searchResults"></div>
+        </section>
+      </main>
+
+      <main class="content app-view" id="libraryPage">
+        <section class="library-section" id="librarySection">
+          <div class="section-row compact">
+            <div>
+              <span class="eyebrow">Library</span>
+              <h2>Your music shelf</h2>
+            </div>
+            <button class="text-button" id="showAllLibrary" type="button">Show all</button>
+          </div>
+          <div class="library-grid" id="libraryGrid"></div>
+        </section>
+      </main>
+
+      <main class="content app-view" id="livePage">
+        <section class="live-section" id="liveSection">
+          <div class="section-row compact">
+            <div>
+              <span class="eyebrow">Live</span>
+              <h2>Live stations</h2>
+            </div>
+          </div>
+          <div class="live-grid">
+            <button class="live-card" type="button" data-live="Focus">
+              <i data-lucide="broadcast"></i>
+              <strong>Focus Live</strong>
+              <span>Calm beats and deep work songs</span>
+            </button>
+            <button class="live-card" type="button" data-live="Party">
+              <i data-lucide="radio-tower"></i>
+              <strong>Party Live</strong>
+              <span>Dance, pop, and high-energy tracks</span>
+            </button>
+            <button class="live-card" type="button" data-live="Romance">
+              <i data-lucide="heart"></i>
+              <strong>Romance Live</strong>
+              <span>Love songs and soft evening picks</span>
+            </button>
+            <button class="live-card" type="button" data-live="Workout">
+              <i data-lucide="flame"></i>
+              <strong>Workout Live</strong>
+              <span>Fast tracks for active listening</span>
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <main class="content app-view" id="playlistPage">
+        <section class="page-panel">
+          <div class="section-row compact">
+            <div>
+              <span class="eyebrow">Playlist</span>
+              <h1 id="playlistTitle">Playlist songs</h1>
+              <p class="upload-status" id="playlistDescription">Songs selected for this playlist.</p>
+            </div>
+            <button class="secondary-button" id="backToHomeFromPlaylist" type="button">
+              <i data-lucide="arrow-left"></i>
+              Home
+            </button>
+          </div>
+          <div class="track-list" id="playlistSongs"></div>
+        </section>
+      </main>
+
+      <main class="content app-view" id="userLoginView">
+        <section class="creator-login-panel">
+          <div>
+            <span class="eyebrow">Listener Account</span>
+            <h1>Sign in for favorites and history.</h1>
+            <p>Your favorite songs and listening history are saved to your account and restored after refresh.</p>
+          </div>
+          <form class="creator-login-form" id="userLoginForm">
+            <div class="auth-tabs" aria-label="User authentication mode">
+              <button class="active" type="button" data-user-auth-mode="login">Sign in</button>
+              <button type="button" data-user-auth-mode="signup">Sign up</button>
+            </div>
+            <label>
+              <span>Name</span>
+              <input id="userLoginName" type="text" placeholder="Your name" required />
+            </label>
+            <label>
+              <span>Email address</span>
+              <input id="userLoginEmail" type="text" inputmode="email" placeholder="you@example.com" required />
+            </label>
+            <label>
+              <span>Password</span>
+              <input id="userLoginPassword" type="password" placeholder="At least 6 characters" required />
+            </label>
+            <button class="primary-button" type="submit">
+              <i data-lucide="log-in"></i>
+              <span id="userAuthSubmitLabel">Sign in</span>
+            </button>
+            <p class="auth-status" id="userAuthStatus">Use Sign up first, then Sign in later with the same email and password.</p>
+          </form>
+        </section>
+      </main>
+
+      <main class="content app-view" id="userLibraryView">
+        <header class="studio-header">
+          <div>
+            <span class="eyebrow">Listener Account</span>
+            <h1 id="userGreeting">Your music memory</h1>
+          </div>
+          <button class="secondary-button" id="logoutUser" type="button">
+            <i data-lucide="log-out"></i>
+            Logout
+          </button>
+        </header>
+        <section class="studio-grid">
+          <section class="studio-panel">
+            <div class="section-row compact">
+              <div>
+                <span class="eyebrow">Favorites</span>
+                <h2>Favorite songs</h2>
+              </div>
+            </div>
+            <div class="memory-list" id="favoriteSongsList"></div>
+          </section>
+          <section class="studio-panel">
+            <div class="section-row compact">
+              <div>
+                <span class="eyebrow">History</span>
+                <h2>Recently played</h2>
+              </div>
+            </div>
+            <div class="memory-list" id="historySongsList"></div>
+          </section>
+        </section>
+      </main>
+
+      <main class="content app-view" id="creatorLoginView">
+        <section class="creator-login-panel">
+          <div>
+            <span class="eyebrow">Creator Access</span>
+            <h1>Sign in to manage your music.</h1>
+            <p>Create an account with your real email and password, then sign in anytime to manage creator tools.</p>
+          </div>
+          <form class="creator-login-form" id="creatorLoginForm">
+            <div class="auth-tabs" aria-label="Authentication mode">
+              <button class="active" type="button" data-auth-mode="login">Sign in</button>
+              <button type="button" data-auth-mode="signup">Sign up</button>
+            </div>
+            <label>
+              <span>Creator name</span>
+              <input id="creatorLoginName" type="text" placeholder="Your artist or label name" required />
+            </label>
+            <label>
+              <span>Email address</span>
+              <input id="creatorLoginEmail" type="text" inputmode="email" placeholder="creator@example.com" required />
+            </label>
+            <label>
+              <span>Password</span>
+              <input id="creatorLoginPassword" type="password" placeholder="At least 6 characters" required />
+            </label>
+            <button class="primary-button" type="submit">
+              <i data-lucide="log-in"></i>
+              <span id="authSubmitLabel">Sign in</span>
+            </button>
+            <p class="auth-status" id="authStatus">Use Sign up first, then Sign in later with the same email and password.</p>
+          </form>
+        </section>
+      </main>
+
+      <main class="content app-view" id="creatorStudioView">
+        <header class="studio-header">
+          <div>
+            <span class="eyebrow">Creator Studio</span>
+            <h1 id="studioGreeting">Manage your music</h1>
+          </div>
+          <button class="secondary-button" id="logoutCreator" type="button">
+            <i data-lucide="log-out"></i>
+            Logout
+          </button>
+        </header>
+
+        <section class="studio-grid">
+          <section class="studio-panel">
+            <div class="section-row compact">
+              <div>
+                <span class="eyebrow">Albums</span>
+                <h2>Create album</h2>
+              </div>
+            </div>
+            <form class="studio-form" id="albumForm">
+              <label>
+                <span>Album name</span>
+                <input id="albumName" type="text" placeholder="Album title" required />
+              </label>
+              <label>
+                <span>Album mood</span>
+                <select id="albumMood" required>
+                  <option value="Focus">Focus</option>
+                  <option value="Party">Party</option>
+                  <option value="Romance">Romance</option>
+                  <option value="Workout">Workout</option>
+                </select>
+              </label>
+              <button class="primary-button" type="submit">
+                <i data-lucide="disc-3"></i>
+                Create album
+              </button>
+            </form>
+            <div class="album-list" id="albumList"></div>
+          </section>
+
+          <section class="studio-panel">
+            <div class="section-row compact">
+              <div>
+                <span class="eyebrow">Songs</span>
+                <h2>Upload MP3</h2>
+              </div>
+              <span class="upload-count" id="uploadCount">0 creator songs</span>
+            </div>
+            <form class="studio-form upload-form" id="uploadForm">
+              <label>
+                <span>Song title</span>
+                <input id="songTitle" type="text" placeholder="Enter song name" required />
+              </label>
+              <label>
+                <span>Singer name</span>
+                <input id="songSinger" type="text" placeholder="Singer or vocalist name" required />
+              </label>
+              <label>
+                <span>Song type</span>
+                <select id="songMood" required>
+                  <option value="Focus">Focus</option>
+                  <option value="Party">Party</option>
+                  <option value="Romance">Romance</option>
+                  <option value="Workout">Workout</option>
+                </select>
+              </label>
+              <label>
+                <span>Album</span>
+                <select id="songAlbum" required></select>
+              </label>
+              <label class="file-picker">
+                <span>MP3 file</span>
+                <input id="songFile" type="file" accept="audio/mpeg,.mp3" required />
+              </label>
+              <label>
+                <span>Lyrics / words optional</span>
+                <textarea id="songLyrics" placeholder="Paste lyrics or repeated words if available"></textarea>
+              </label>
+              <button class="primary-button" type="submit">
+                <i data-lucide="upload"></i>
+                Add song
+              </button>
+            </form>
+            <p class="upload-status" id="uploadStatus">Only creators can upload MP3 songs.</p>
+          </section>
+        </section>
+
+        <section class="studio-panel">
+          <div class="section-row compact">
+            <div>
+              <span class="eyebrow">Catalog</span>
+              <h2>Your creator songs</h2>
+            </div>
+          </div>
+          <div class="creator-song-list" id="creatorSongList"></div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="player">
+      <div class="player-track">
+        <img id="playerCover" alt="Current track cover" />
+        <div>
+          <strong id="playerTitle">Select a track</strong>
+          <span id="playerArtist">RaagaFlow</span>
+        </div>
+      </div>
+      <div class="player-controls">
+        <button class="icon-button" id="previousTrack" type="button" aria-label="Previous track">
+          <i data-lucide="skip-back"></i>
+        </button>
+        <button class="play-button" id="playPause" type="button" aria-label="Play or pause">
+          <i data-lucide="play"></i>
+        </button>
+        <button class="icon-button" id="nextTrack" type="button" aria-label="Next track">
+          <i data-lucide="skip-forward"></i>
+        </button>
+      </div>
+      <div class="progress-area">
+        <span id="currentTime">0:00</span>
+        <input id="progress" type="range" min="0" max="100" value="24" aria-label="Track progress" />
+        <span id="duration">3:42</span>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

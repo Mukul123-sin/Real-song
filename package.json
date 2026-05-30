@@ -1,0 +1,14 @@
+{
+  "name": "raagaflow-music-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RaagaFlow music web app with creator uploads, auth, favorites, history, and recommendations.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check app.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
